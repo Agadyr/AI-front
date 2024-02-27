@@ -3,15 +3,19 @@ import Header from "@/components/header"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { authorize } from "./store/slices/authSlice"
 
 export default function Main(){
     const [input, setInput] = useState("")
     const [error, setError] = useState("")
     const router = useRouter()
+    const dispatch = useDispatch()
     const save = () => {
         if(input.length <= 5){
             setError("Token field is required")
         }else{
+            dispatch(authorize(input))
             router.push("/home")
         }
     }

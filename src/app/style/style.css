@@ -2,7 +2,7 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 140px;
+    padding: 0 180px;
     background-color:cornflowerblue;
     height: 90px;
 }
@@ -27,4 +27,103 @@ header a{
 form h1{
     font-weight: 600;
     margin-bottom: 50px;
+}
+
+
+
+
+/* home page */
+.ai{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 180px;
+    margin: 0 auto;
+    gap: 20px;
+}
+.ai-tems{
+    background: linear-gradient(135deg, #007bff, #00bcd4);
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    padding: 20px 10px;
+    width: 32%;
+    color: #fff;
+    height: auto;
+}
+.ai-tems h4{
+    font-size: 19px;
+}
+.btn-div{
+    display: flex;
+    justify-content: right;
+    margin-top: 10px;
+}
+.ai-tems h3{
+    font-size: 25px;
+    font-weight: 600;
+}
+.btn-try{
+    background-color: #fc6e51;
+    color: #fff;
+    font-weight: 600;
+    padding: 5px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: .3s;
+}
+.btn-try:hover{
+    background-color: #6610f2;
+}
+.ti{
+    text-align: center;
+}
+.main-word{
+    font-weight: 600;
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+
+
+/* chatter blast page */
+
+
+.chat-container{
+    max-width: 800px;
+    margin: 0 auto;
+}
+.input-chat{
+    width: 800px;
+    position: fixed;
+    bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+.input-chat input{
+    padding: 13px 30px;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+.btn-closed{
+    font-size: 18px;
+    border-radius: 50%;
+    width: 60px;
+    height: 50px;
+    background-color: #dedede;
+}
+.btn-send{
+    font-size: 18px;
+    border-radius: 50%;
+    width: 60px;
+    height: 50px;
+    background-color: #007bff;
+    color: #fff;
+}
+.btn-send:hover{
+    color: #fff;
+    background-color: #6610f2;
+    transition: .2s;
+}
+.btn-closed:hover{
+    color: #fff;
+    transition: .2s;
+    background-color: #00bcd4;
 }
