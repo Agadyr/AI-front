@@ -46,8 +46,24 @@ export const CreateJob = (text_prompt) => async(dispatch) => {
         dispatch(genJob(res.data))
         return res.data
     })
-    
+
     if(res.status == 400 || res.status == 401 || res.status == 403 || res.status == 503){
         dispatch(error(res))
     }
+}
+
+export const getStatus = (job_id) => async(dispatch) => {
+    const headers = {
+        "x-api-token":localStorage.getItem("token")
+    }
+    
+    const res = await axios.get(`${END_POINT}/imagegeneration/generation/${job_id}`, {headers}).then((res) => {
+        dispatch(genStatus(res.data))
+        return res.data
+    })
+
+    if(res.status == 400 || res.status == 401 || res.status == 403 || res.status == 503){
+        dispatch(error(res))
+    }
+    dispatch(disable(false))
 }
