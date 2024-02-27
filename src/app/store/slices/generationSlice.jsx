@@ -44,8 +44,13 @@ export const CreateJob = (text_prompt) => async(dispatch) => {
     dispatch(disable(true))
     const res = await axios.post(`${END_POINT}/imagegeneration/generation`, text_prompt, {headers}).then((res) => {
         dispatch(genJob(res.data))
+
         return res.data
     })
+
+    setTimeout(() => {
+        dispatch(getStatus(res.job_id))
+    }, 3000);
 
     if(res.status == 400 || res.status == 401 || res.status == 403 || res.status == 503){
         dispatch(error(res))
@@ -56,8 +61,8 @@ export const getStatus = (job_id) => async(dispatch) => {
     const headers = {
         "x-api-token":localStorage.getItem("token")
     }
-    
-    const res = await axios.get(`${END_POINT}/imagegeneration/generation/${job_id}`, {headers}).then((res) => {
+
+    const res = await axios.get(`${END_POINT}/imagegeneration/getStatusJob/${job_id}`, {headers}).then((res) => {
         dispatch(genStatus(res.data))
         return res.data
     })
@@ -67,3 +72,20 @@ export const getStatus = (job_id) => async(dispatch) => {
     }
     dispatch(disable(false))
 }
+
+export const finish = (job_id) => async(dispatch) => {
+    const headers = {
+        "x-api-token":localStorage.getItem("token")
+    }
+    const res = await axios.get(`${END_POINT}/imagegeneration/getResultJob/${job_id}`, {headers}).then((res) => {
+        dispatch(genJob(res.data))
+        return res.data
+    })
+    if(res.status == 400 || res.status == 401 || res.status == 403 || res.status == 503){
+        dispatch(error(res))
+    }
+}
+
+
+
+export default generateSlice.reducer
