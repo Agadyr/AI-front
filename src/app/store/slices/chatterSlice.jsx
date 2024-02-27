@@ -33,4 +33,20 @@ export const chatterSlice = createSlice({
 
 export const {start, partial, error, disabled, reset} = chatterSlice.actions
 
+export const StartConversation = (input) =>  async(dispatch) => {
+    const headers = {
+        'x-api-token': localStorage.getItem('token')
+    }
+    
+    const res = await axios.post(`${END_POINT}/chat/conversation`, {text_prompt:input} , {headers}).then((res) => {
+        dispatch(start(res.data))
+        return res.data
+    })
+
+    if(res.status == 401 || res.status == 400 || res.status == 403 || res.status == 503){
+        dispatch(error(res.data))
+    }
+}
+
+
 export default chatterSlice.reducer
