@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { END_POINT } from "@/app/config/helper";
 import axios from "axios";
+import { RedirectStatusCode } from "next/dist/client/components/redirect-status-code";
+import { Diplomata } from "next/font/google";
     
 export const chatterSlice = createSlice({
     name:"auth",
@@ -39,17 +41,18 @@ export const StartConversation = (input) =>  async(dispatch) => {
     }
 
     dispatch(disabled(true))
-    const res = await axios.post(`${END_POINT}/chat/conversation`, {text_prompt:input} , {headers}).then((res) => {
+
+    const res = await axios.post(`${END_POINT}/chat/conversation`, {prompt:input} , {headers}).then((res) => {
         return res.data
     })
-
     if(res.status == 401 || res.status == 400 || res.status == 403 || res.status == 503){
-        dispatch(error(res.data))
+        dispatch(error(res))
+        dispatch(disabled(false))
     }else{
-        dispatch(start(res.data))
+        dispatch(start(res))
         setTimeout(() => {
-            
-        }, 1000);t
+           dispatch(getPartial(res.conversation_id)) 
+        }, 1000);
     }
 }
 
@@ -57,13 +60,14 @@ export const getPartial = (conversation_id) => async(dispatch) => {
     const headers = {
         "x-api-token" : localStorage.getItem("token")
     }
-    const res = await axios.get(`${END_POINT}/chat/conversation/${conversation_id}`).then((res) => {
+    const res = await axios.get(`${END_POINT}/chat/conversation/${conversation_id}` ,{headers}).then((res) => {
         dispatch(partial(res.data))
         return res.data
     })
     dispatch(disabled(false))
     if(res.status == 401 || res.status == 400 || res.status == 403 || res.status == 503){
         dispatch(error(res.data))
+        dispatch(disabled(false))
     }
 }
 
