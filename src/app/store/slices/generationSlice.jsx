@@ -86,6 +86,43 @@ export const finish = (job_id) => async(dispatch) => {
     }
 }
 
+export const upscale = (resource_id) => async(dispatch) => {
+    const headers = {
+        "x-api-token":localStorage.getItem("token")
+    }
+    const res = await axios.get(`${END_POINT}/imagegeneration/upscale`, {resource_id:resource_id}, {headers}).then((res) => {
+        dispatch(genJob(res.data))
+        return res.data
+    })
+    if(res.status == 400 || res.status == 401 || res.status == 403 || res.status == 503){
+        dispatch(error(res))
+    }
+}
 
+export const zoomin = (resource_id) => async(dispatch) => {
+    const headers = {
+        "x-api-token":localStorage.getItem("token")
+    }
+    const res = await axios.get(`${END_POINT}/imagegeneration/zoomin`, {resource_id:resource_id}, {headers}).then((res) => {
+        dispatch(genJob(res.data))
+        return res.data
+    })
+    if(res.status == 400 || res.status == 401 || res.status == 403 || res.status == 503){
+        dispatch(error(res))
+    }
+}
+
+export const zoomout = (resource_id) => async(dispatch) => {
+    const headers = {
+        "x-api-token":localStorage.getItem("token")
+    }
+    const res = await axios.get(`${END_POINT}/imagegeneration/zoomOut`, {resource_id:resource_id}, {headers}).then((res) => {
+        dispatch(genJob(res.data))
+        return res.data
+    })
+    if(res.status == 400 || res.status == 401 || res.status == 403 || res.status == 503){
+        dispatch(error(res))
+    }
+}
 
 export default generateSlice.reducer
