@@ -20,3 +20,11 @@ header a{
     color: #fff;
     font-weight: 500;
 }
+.auth-token{
+    max-width: 400px;
+    margin: 0 auto;
+}
+form h1{
+    font-weight: 600;
+    margin-bottom: 50px;
+}
