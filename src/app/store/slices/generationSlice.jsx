@@ -44,13 +44,13 @@ export const CreateJob = (text_prompt) => async(dispatch) => {
     dispatch(disable(true))
     const res = await axios.post(`${END_POINT}/imagegeneration/generation`, text_prompt, {headers}).then((res) => {
         dispatch(genJob(res.data))
-
+        setTimeout(() => {
+            dispatch(getStatus(res.data.job_id))
+        }, 1000);
         return res.data
     })
 
-    setTimeout(() => {
-        dispatch(getStatus(res.job_id))
-    }, 3000);
+
 
     if(res.status == 400 || res.status == 401 || res.status == 403 || res.status == 503){
         dispatch(error(res))
@@ -78,7 +78,7 @@ export const finish = (job_id) => async(dispatch) => {
         "x-api-token":localStorage.getItem("token")
     }
     const res = await axios.get(`${END_POINT}/imagegeneration/getResultJob/${job_id}`, {headers}).then((res) => {
-        dispatch(genJob(res.data))
+        dispatch(end(res.data))
         return res.data
     })
     if(res.status == 400 || res.status == 401 || res.status == 403 || res.status == 503){
@@ -90,7 +90,7 @@ export const upscale = (resource_id) => async(dispatch) => {
     const headers = {
         "x-api-token":localStorage.getItem("token")
     }
-    const res = await axios.get(`${END_POINT}/imagegeneration/upscale`, {resource_id:resource_id}, {headers}).then((res) => {
+    const res = await axios.post(`${END_POINT}/imagegeneration/upscale`, {resource_id:resource_id}, {headers}).then((res) => {
         dispatch(genJob(res.data))
         return res.data
     })
@@ -103,7 +103,7 @@ export const zoomin = (resource_id) => async(dispatch) => {
     const headers = {
         "x-api-token":localStorage.getItem("token")
     }
-    const res = await axios.get(`${END_POINT}/imagegeneration/zoomin`, {resource_id:resource_id}, {headers}).then((res) => {
+    const res = await axios.post(`${END_POINT}/imagegeneration/zoomin`, {resource_id:resource_id}, {headers}).then((res) => {
         dispatch(genJob(res.data))
         return res.data
     })
@@ -116,7 +116,7 @@ export const zoomout = (resource_id) => async(dispatch) => {
     const headers = {
         "x-api-token":localStorage.getItem("token")
     }
-    const res = await axios.get(`${END_POINT}/imagegeneration/zoomOut`, {resource_id:resource_id}, {headers}).then((res) => {
+    const res = await axios.post(`${END_POINT}/imagegeneration/zoomOut`, {resource_id:resource_id}, {headers}).then((res) => {
         dispatch(genJob(res.data))
         return res.data
     })

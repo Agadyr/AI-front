@@ -82,6 +82,8 @@ form h1{
 }
 .btn-try:hover{
     background-color: #6610f2;
+    color: #fff;
+    cursor: pointer;
 }
 .ti{
     text-align: center;
@@ -144,7 +146,16 @@ form h1{
     animation: anim 1s step-end infinite ;
     opacity: 1;
 }
-
+.img_gen img{
+    margin-top: 10px;
+    width: 400px;
+    border-radius: 5px;
+}
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 @keyframes anim {
     50%{
         opacity: 0;

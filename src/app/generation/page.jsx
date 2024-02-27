@@ -3,8 +3,8 @@
 import Header from "@/components/header"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { CreateJob, end } from "../store/slices/generationSlice"
-import { reset } from "../store/slices/chatterSlice"
+import { CreateJob, end, finish, getStatus, upscale, zoomin, zoomout, } from "../store/slices/generationSlice"
+import { disabled, reset } from "../store/slices/chatterSlice"
 
 export default function generation(){
     const dispatch = useDispatch()
@@ -13,7 +13,7 @@ export default function generation(){
     const errorFromBack = useSelector(state => state.generate.error)
     const job = useSelector(state => state.generate.job)
     const status = useSelector(state => state.generate.status)
-    const disabled = useSelector(state => state.generate.disabled)
+    const inputdisabled = useSelector(state => state.generate.disabled)
     const result = useSelector(state => state.generate.result)
 
     const [error, setError] = useState("")
@@ -28,18 +28,23 @@ export default function generation(){
             setAnswer(input)
             setInput("")
             setError("")
-            dispatch(end())
+            dispatch(end(""))
         }
     }
 
     useEffect(() => {dispatch(reset())}, [])
-    useEffect(() => {setError(error), [errorFromBack]})
-    console.log(status);
-    console.log(job)
+    useEffect(() => {
+        setError(error)
+    },[errorFromBack])
 
-    // useEffect(() => {
-
-    // }, [status])
+    useEffect(() => {
+        if(status.progress >= 0 && status.progress <= 70){
+            dispatch(getStatus(job.job_id))
+            dispatch(disabled(true))
+        }else{
+            dispatch(disabled(false))
+        }
+    }, [status])
     return (
         <div>
             <Header/>
@@ -52,7 +57,7 @@ export default function generation(){
                         <p className="text-danger">{errorFromBack.status} {errorFromBack.detail}</p>
                     </div>
                 </section>}
-                <h4 className="ti mb-2">{status.progress ?? 0}%</h4>
+                <h4 className="ti mb-2">Progress: {status.progress ?? 0}%</h4>
 
                 {answer && <div className="mt-2 mb-2">
                     <h2>You: </h2>
@@ -62,11 +67,16 @@ export default function generation(){
                 </div>}
 
                 {status.progress && <div className="img_gen">
-                    <img src={result.image_url ?? status.image_url} alt="" />
+                    <img src={result.image_url ? result.image_url : status.image_url} alt="" />
                 </div>}
-
+                {status.progress > 70 && <div className="buttons mt-3">
+                    <button className="btn btn-try" onClick={() => dispatch(finish(job.job_id))}>Get result</button>
+                    {result.resourse_id && <button className="btn btn-try" onClick={() => dispatch(upscale(result.resourse_id))}>Upscale</button>}
+                    {result.resourse_id && <button className="btn btn-try" onClick={() => dispatch(zoomin(result.resourse_id))}>Zoom in</button>}
+                    {result.resourse_id && <button className="btn btn-try" onClick={() => dispatch(zoomout(result.resourse_id))}>Zoom out</button>}
+                </div>}
                 <div className="input-chat">
-                    <input disabled={disabled} className="form-control border shadow-sm" onChange={(e) => setInput(e.target.value)} value={input} type="text" name="" id="" placeholder="Text..."/>
+                    <input disabled={inputdisabled} className="form-control border shadow-sm" onChange={(e) => setInput(e.target.value)} value={input} type="text" name="" id="" placeholder="Text..."/>
                     <button type="button" onClick={() => setInput("")} className="btn btn-closed mx-2">&#10007;</button>
                     <button type="button" onClick={() => save()} className="btn btn-send mx-2">&#10003;</button>
                 </div>
