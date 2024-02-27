@@ -9,8 +9,8 @@ export default function Header(){
     return(
         <header>
             <h1>Ws Karaganda</h1>
-            {isAuth && <Link href="/" >Logout</Link>}
-            {!isAuth && <Link href="/" onClick={() => dispatch(logout())}>Login</Link>}
+            {isAuth && <Link href="/" onClick={() => dispatch(logout())}>Logout</Link>}
+            {!isAuth && <Link href="/" >Login</Link>}
         </header>
     )
 }

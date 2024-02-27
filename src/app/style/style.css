@@ -28,8 +28,18 @@ form h1{
     font-weight: 600;
     margin-bottom: 50px;
 }
-
-
+.df{
+    display: flex;
+}
+.aic{
+    align-items: center;
+}
+.jcc{
+    justify-content: center;
+}
+.fd{
+    flex-direction: column;
+}
 
 
 /* home page */
@@ -89,10 +99,6 @@ form h1{
 .chat-container{
     max-width: 800px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 .input-chat{
     width: 800px;
@@ -129,4 +135,18 @@ form h1{
     color: #fff;
     transition: .2s;
     background-color: #00bcd4;
+}
+.chat{
+    background-color: #5159ff;
+    color: #fff;
+}
+.typing{
+    animation: anim 1s step-end infinite ;
+    opacity: 1;
+}
+
+@keyframes anim {
+    50%{
+        opacity: 0;
+    }
 }
