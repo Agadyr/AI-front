@@ -20,7 +20,7 @@ export default function Home(){
                 <h3>Dream Weaver</h3>
                     <h4>AI image generation</h4>
                     <div className="btn-div">
-                        <Link href="/chatterblast" className="btn btn-try">Try it</Link>
+                        <Link href="/generation" className="btn btn-try">Try it</Link>
                     </div>
                 </div>
                 <div className="ai-tems">
