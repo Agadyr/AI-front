@@ -27,7 +27,7 @@ export default function Home(){
                 <h3>Mind Reader</h3>
                     <h4>AI Recognition objects on Image</h4>
                     <div className="btn-div">
-                        <Link href="/chatterblast" className="btn btn-try">Try it</Link>
+                        <Link href="/mind" className="btn btn-try">Try it</Link>
                     </div>
                 </div>
             </div>
