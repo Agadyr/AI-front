@@ -17,6 +17,29 @@ export const mindSlice = createSlice({
     }
 })
 
-export const {res, setError} = mindSlice.actions
+export const {rec, setError} = mindSlice.actions
+
+export const recognize = (image) => async(dispatch) => {
+    const form = new FormData()
+    form.append("image", image)
+
+    const headers = {
+        "x-api-token": localStorage.getItem("token")  
+    }
+    const res = await axios.post(`${END_POINT}/imageRecognition`, form , {headers}).then((res) => {
+        if(res.data.status == 400 || res.data.status == 401 || res.data.status == 403 || res.data.status == 503){
+            dispatch(setError(res.data))
+        }else{
+            dispatch(rec(res.data.objects[0]))
+            dispatch(setError(""))
+            return res.data
+        }
+
+    })
 
 
+
+}
+
+
+export default mindSlice.reducer

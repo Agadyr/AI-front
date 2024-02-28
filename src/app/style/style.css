@@ -183,7 +183,21 @@ form h1{
     height: 400px;
     margin: 20px 0;
 }
-
+.mr-item{
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+.mr-item img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border: 2px solid #dadada;
+}
+.item{
+    position: absolute;
+    border: 2px solid rgb(255, 66, 66);
+}
 @keyframes anim {
     50%{
         opacity: 0;
